@@ -1,6 +1,7 @@
 package com.example.kashish.navjeet;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,17 +25,40 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset;
 
+//    NAV HEADER
+    String email;
+    SharedPreferences preferences;
+    FirebaseAuth.AuthStateListener authListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
+//saving username and id
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    String userId = firebaseUser.getUid();
+                    String userEmail = firebaseUser.getEmail();
+                    preferences = getSharedPreferences("myPref",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("firebasekey", userId);
+                    editor.putString("firebaseuser", userEmail);
+                    editor.commit();
 
-        if (auth.getCurrentUser() != null) {
-            startActivity(new Intent(LoginActivity.this, UserHelpActivity.class));
-            finish();
-        }
+                    Toast.makeText(LoginActivity.this, userEmail, Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+
+//        if (auth.getCurrentUser() != null) {
+//            startActivity(new Intent(LoginActivity.this, UserHelpActivity.class));
+//            finish();
+//        }
 
         // set the view now
         setContentView(R.layout.activity_login);
@@ -68,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = inputEmail.getText().toString();
+                 email = inputEmail.getText().toString();
                 final String password = inputPassword.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
@@ -108,6 +133,13 @@ public class LoginActivity extends AppCompatActivity {
                         });
             }
         });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        auth.addAuthStateListener(authListener);
     }
 }
 

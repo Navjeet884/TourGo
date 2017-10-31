@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kashish.navjeet">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,8 +22,12 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.kashish.navjeet.PlaceDescription" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name="com.example.kashish.navjeet.SignupActivity" />
         <activity android:name="com.example.kashish.navjeet.LoginActivity" />
+        <activity android:name="com.example.kashish.navjeet.UserHelpActivity" />
+
+        <activity android:name="com.example.kashish.navjeet.ResetPasswordActivity" />
+
         <activity android:name="com.example.kashish.navjeet.BaseActivity"></activity>
     </application>
 

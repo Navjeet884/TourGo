@@ -1,6 +1,7 @@
 package com.example.kashish.navjeet;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -16,7 +17,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,10 +31,16 @@ public class MainActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
 
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private ProgressBar progressBar;
+    SharedPreferences preferences;
 
 //                                                       for nav header
     private TextView mNameTextView;
     private TextView mEmailTextView;
+    private String uEmail;
+
+//    Nav Header
+
 
 //    String uEmail;
 
@@ -42,7 +51,10 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
 //        utils = new Utils();
 
@@ -50,6 +62,13 @@ public class MainActivity extends AppCompatActivity
 
 //        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 //        uEmail = user.getEmail();
+
+//        for nav header
+        preferences = getSharedPreferences("myPref",MODE_PRIVATE);
+        uEmail = preferences.getString("firebaseuser","");
+
+        Toast.makeText(this, "Email : "+uEmail, Toast.LENGTH_SHORT).show();
+
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -111,12 +130,20 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        if (progressBar != null) {
+            progressBar.setVisibility(View.GONE);
+        }
+
 //                                         Displaying username and email in nav header
 
-//        View navHeaderView = navigationView.getHeaderView(0);
-//
+        View navHeaderView = navigationView.getHeaderView(0);
+
 //         mNameTextView =  navHeaderView.findViewById(R.id.textView_Name);
-//         mEmailTextView = navHeaderView.findViewById(R.id.textView_Email);
+         mEmailTextView = navHeaderView.findViewById(R.id.textView_Email);
+        mEmailTextView.setText(uEmail);
+
 //
 //    mDatabase.child(uId).addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override
@@ -144,6 +171,7 @@ public class MainActivity extends AppCompatActivity
 
 
     }
+
 
     @Override
     protected void onStart() {
@@ -195,9 +223,6 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             fragment = new TopSpotsFragment();
         } else if (id == R.id.nav_gallery) {
-            Intent userHelpIntent = new Intent(MainActivity.this,UserHelpActivity.class);
-            startActivity(userHelpIntent);
-            finish();
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -206,6 +231,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
+            Intent userHelpIntent = new Intent(MainActivity.this,UserHelpActivity.class);
+            startActivity(userHelpIntent);
 
         } else if (id == R.id.logout) {
             mAuth.signOut();
@@ -221,5 +248,14 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+
+    }
 
 }

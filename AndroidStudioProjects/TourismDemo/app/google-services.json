@@ -1,35 +1,27 @@
 {
   "project_info": {
-    "project_number": "831105176625",
-    "firebase_url": "https://tourismdemo-34055.firebaseio.com",
-    "project_id": "tourismdemo-34055",
-    "storage_bucket": "tourismdemo-34055.appspot.com"
+    "project_number": "223794553012",
+    "firebase_url": "https://tourismproject-501a7.firebaseio.com",
+    "project_id": "tourismproject-501a7",
+    "storage_bucket": "tourismproject-501a7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:831105176625:android:6ae19155966e7a3e",
+        "mobilesdk_app_id": "1:223794553012:android:af53347d8c5ae574",
         "android_client_info": {
-          "package_name": "com.example.kashish.tourismdemo"
+          "package_name": "com.example.kashish.navjeet"
         }
       },
       "oauth_client": [
         {
-          "client_id": "831105176625-d44bb4a8focsbt2oin0arjbg0f0cvko6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.kashish.tourismdemo",
-            "certificate_hash": "85f56d49479368978b48857265e1a13086d4692c"
-          }
-        },
-        {
-          "client_id": "831105176625-0l9i07sm01bnuk20q09rdv7ikflkot57.apps.googleusercontent.com",
+          "client_id": "223794553012-a7v0h8mcp7i5rqt7osi5p4f5k94ih9c4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBcX51-1uvfSllCpl7Z-tovh1gSdJrMHGQ"
+          "current_key": "AIzaSyAAMEO7HC51QXh5vq01C4FWMTr-ZsuDOlU"
         }
       ],
       "services": {
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "831105176625-0l9i07sm01bnuk20q09rdv7ikflkot57.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

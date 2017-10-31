@@ -6,15 +6,8 @@ package com.example.kashish.navjeet.Utils;
 
 public class Utils {
 
-    public static String UID = null;
-
-    public void setUID(String uid) {
-        UID = uid;
-    }
-
-    public String getUID() {
-        return UID;
-    }
+    public static final String USER_EMAIL = "uemail";
+//    public static final String KEY_LOGREG = "keyloginregister";
 
 
 
